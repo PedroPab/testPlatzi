@@ -1,11 +1,6 @@
+const { generateManyBooks } = require('../fakes/book.fake');
 const BooksService = require('./books.service');
 
-const fakeBooks = [
-  {
-    _id: '60f1b3b3b3b3b3b3b3b3b3',
-    name: 'Book 1',
-  },
-]
 const mockSypGetAll = jest.fn()
 
 const MongoLibSub = {
@@ -32,22 +27,25 @@ describe('test for BooksService', () => {
   describe('test for getBooks method', () => {
     it('should return an array of books', async () => {
       // arrange
+      const fakeBooks = generateManyBooks();
       mockSypGetAll.mockResolvedValue(fakeBooks);
       const query = {};
       // act
       const books = await service.getBooks(query);
       // assert
-      expect(books.length).toEqual(1);
+      expect(books.length).toEqual(fakeBooks.length);
     })
 
     it('debe contener el id ', async () => {
       // arrange
+      const fakeBooks = generateManyBooks();
+
       mockSypGetAll.mockResolvedValue(fakeBooks);
       const query = {};
       // act
       const books = await service.getBooks(query);
       // assert
-      expect(books[0].name).toEqual('Book 1');
+      expect(books[0].name).toEqual(fakeBooks[0].name);
       expect(mockSypGetAll).toHaveBeenCalled()
       expect(mockSypGetAll).toHaveBeenCalledTimes(1)
       expect(mockSypGetAll).toHaveBeenCalledWith(service.collection, query)
