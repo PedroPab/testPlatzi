@@ -4,6 +4,8 @@ const { config } = require('../config');
 const DB_NAME = config.dbName;
 const MONGO_URI = config.dbUrl;
 
+console.log(" MONGO_URI", MONGO_URI)
+console.log(" DB_NAME", DB_NAME)
 class MongoLib {
   constructor() {
     this.client = new MongoClient(MONGO_URI, {
